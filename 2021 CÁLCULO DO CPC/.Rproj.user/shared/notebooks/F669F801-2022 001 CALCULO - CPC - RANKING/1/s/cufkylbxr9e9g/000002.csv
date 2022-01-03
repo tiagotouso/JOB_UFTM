@@ -1,0 +1,1 @@
+"0","write.csv2(resultado, file = 'RESULTADOS/CALCULO - CPC - RANKING.csv', na = """", quote = FALSE)"

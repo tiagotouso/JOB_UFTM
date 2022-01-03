@@ -1,0 +1,4 @@
+"0","filtro %>%"
+"0","  ggplot(aes(x = `Categoria Administrativa`, y = media)) +"
+"0","  geom_col() + "
+"0","  theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust=1))"

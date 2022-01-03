@@ -1,0 +1,51 @@
+"0","glimpse(dados)"
+"1","Rows: 8,368"
+"1",""
+"1","
+"
+"1","Columns: 39"
+"1",""
+"1","
+"
+"1","$ Ano                                                      [3m[38;5;246m<int>[39m[23m 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
+$ Código.da.Área                                           [3m[38;5;246m<int>[39m[23m 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, ~
+$ Área.de.Avaliação                                        [3m[38;5;246m<chr>[39m[23m ""MEDICINA VETERINÁRIA"", ""MEDICINA VETERINÁRIA~
+$ Código.da.IES                                            [3m[38;5;246m<int>[39m[23m 1, 1, 2, 3, 3, 5, 5, 8, 9, 10, 10, 13, 17, 20~
+$ Nome.da.IES                                              [3m[38;5;246m<chr>[39m[23m ""UNIVERSIDADE FEDERAL DE MATO GROSSO"", ""UNIVE~
+$ Sigla.da.IES                                             [3m[38;5;246m<chr>[39m[23m ""UFMT"", ""UFMT"", ""UNB"", ""UFS"", ""UFS"", ""UFPI"", ~
+$ Organização.Acadêmica                                    [3m[38;5;246m<chr>[39m[23m ""Universidade"", ""Universidade"", ""Universidade~
+$ Categoria.Administrativa                                 [3m[38;5;246m<chr>[39m[23m ""Pública Federal"", ""Pública Federal"", ""Públic~
+$ Código.do.Curso                                          [3m[38;5;246m<int>[39m[23m 37, 100763, 18031, 1108067, 1321453, 504, 102~
+$ Modalidade.de.Ensino                                     [3m[38;5;246m<chr>[39m[23m ""Educação Presencial"", ""Educação Presencial"",~
+$ Código.do.Município                                      [3m[38;5;246m<int>[39m[23m 5103403, 5107909, 5300108, 2806701, 2804508, ~
+$ Município.do.Curso                                       [3m[38;5;246m<chr>[39m[23m ""Cuiabá"", ""Sinop"", ""Brasília"", ""São Cristóvão~
+$ Sigla.da.UF                                              [3m[38;5;246m<chr>[39m[23m ""MT"", ""MT"", ""DF"", ""SE"", ""SE"", ""PI"", ""PI"", ""MG~
+$ Nº.de.Concluintes.Inscritos                              [3m[38;5;246m<int>[39m[23m 23, 46, 129, 47, 28, 64, 68, 62, 80, 34, 79, ~
+$ Nº.de.Concluintes.Participantes                          [3m[38;5;246m<int>[39m[23m 20, 39, 119, 39, 25, 62, 65, 58, 76, 33, 71, ~
+$ Nota.Bruta...FG                                          [3m[38;5;246m<dbl>[39m[23m 42.815, 42.112, 50.605, 45.774, 43.540, 43.23~
+$ Nota.Padronizada...FG                                    [3m[38;5;246m<dbl>[39m[23m 2.757, 2.639, 4.069, 3.255, 2.879, 2.828, 2.0~
+$ Nota.Bruta...CE                                          [3m[38;5;246m<dbl>[39m[23m 57.799, 55.728, 59.002, 56.966, 51.780, 54.52~
+$ Nota.Padronizada...CE                                    [3m[38;5;246m<dbl>[39m[23m 3.1362, 2.7651, 3.3516, 2.9870, 2.0580, 2.549~
+$ Conceito.Enade..Contínuo.                                [3m[38;5;246m<dbl>[39m[23m 3.041, 2.733, 3.531, 3.054, 2.263, 2.618, 1.6~
+$ Concluintes.participantes.com.nota.no.Enem               [3m[38;5;246m<int>[39m[23m 19, 36, 97, 29, 25, 53, 60, 57, 67, 31, 64, 8~
+$ Proporção.de.concluintes.participantes.com.nota.no.Enem  [3m[38;5;246m<dbl>[39m[23m 0.949, 0.923, 0.815, 0.743, 1.000, 0.854, 0.9~
+$ Nota.Bruta...IDD                                         [3m[38;5;246m<dbl>[39m[23m -0.793, -0.200, -0.075, 0.402, -0.195, -0.239~
+$ Nota.Padronizada...IDD                                   [3m[38;5;246m<dbl>[39m[23m 1.517, 2.226, 2.377, 2.948, 2.232, 2.180, 1.6~
+$ Nota.Bruta...Organização.Didático.Pedagógica             [3m[38;5;246m<dbl>[39m[23m 4.762, 4.414, 4.523, 4.413, 5.421, 4.597, 5.1~
+$ Nota.Padronizada...Organização.Didático.Pedagógica       [3m[38;5;246m<dbl>[39m[23m 1.937, 1.078, 1.347, 1.075, 3.568, 1.528, 2.9~
+$ Nota.Bruta...Infraestrutura.e.Instalações.Físicas        [3m[38;5;246m<dbl>[39m[23m 4.538, 4.202, 4.118, 3.917, 3.953, 4.881, 4.8~
+$ Nota.Padronizada...Infraestrutura.e.Instalações.Físicas  [3m[38;5;246m<dbl>[39m[23m 2.379, 1.778, 1.627, 1.266, 1.332, 2.994, 2.9~
+$ Nota.Bruta...Oportunidade.de.Ampliação.da.Formação       [3m[38;5;246m<dbl>[39m[23m 4.579, 4.115, 4.390, 3.815, 4.255, 4.351, 4.8~
+$ Nota.Padronizada...Oportunidade.de.Ampliação.da.Formação [3m[38;5;246m<dbl>[39m[23m 2.745, 2.008, 2.445, 1.531, 2.231, 2.383, 3.2~
+$ Nota.Bruta...Mestres                                     [3m[38;5;246m<dbl>[39m[23m 1.000, 0.936, 0.982, 0.923, 1.000, 0.958, 0.9~
+$ Nota.Padronizada...Mestres                               [3m[38;5;246m<dbl>[39m[23m 5.000, 3.905, 4.693, 3.681, 5.000, 4.295, 4.6~
+$ Nota.Bruta...Doutores                                    [3m[38;5;246m<dbl>[39m[23m 0.938, 0.829, 0.910, 0.833, 0.944, 0.794, 0.7~
+$ Nota.Padronizada...Doutores                              [3m[38;5;246m<dbl>[39m[23m 4.642, 4.007, 4.479, 4.027, 4.675, 3.801, 3.3~
+$ Nota.Bruta...Regime.de.Trabalho                          [3m[38;5;246m<dbl>[39m[23m 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.0~
+$ Nota.Padronizada...Regime.de.Trabalho                    [3m[38;5;246m<dbl>[39m[23m 5.000, 5.000, 5.000, 5.000, 5.000, 5.000, 5.0~
+$ CPC..Contínuo.                                           [3m[38;5;246m<chr>[39m[23m ""2,918"", ""2,815"", ""3,18"", ""3,08"", ""3,075"", ""2~
+$ CPC..Faixa.                                              [3m[38;5;246m<chr>[39m[23m ""3"", ""3"", ""4"", ""4"", ""4"", ""3"", ""3"", ""4"", ""5"", ~
+$ Observação                                               [3m[38;5;246m<chr>[39m[23m """", """", """", """", """", """", """", """", """", """", """", ""~"
+"1",""
+"1","
+"

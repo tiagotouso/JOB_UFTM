@@ -1,0 +1,3 @@
+"0","idexcluir <- which(dados$CPC..Faixa. %in% c('SC', ''))"
+"0",""
+"0","dados <- dados[-idexcluir, ]"

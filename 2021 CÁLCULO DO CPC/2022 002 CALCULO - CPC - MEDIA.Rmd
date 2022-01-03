@@ -1,0 +1,143 @@
+---
+title: "CÁLCULO DA MÉDIA CPC"
+output: html_notebook
+---
+
+# PROBLEMA
+
+Calcular a média dos cursos da UFTM no CPC.  
+
+O que é o Conceito Preliminar de Curso?
+O conceito preliminar de curso (CPC) é calculado no ano seguinte ao da realização do Enade, em cada área, e considera, além do desempenho dos estudantes, o corpo docente, a infraestrutura e os recursos didático-pedagógicos, entre outros itens.
+
+Mais informações  
+http://portal.mec.gov.br/component/content/article?id=13074:o-que-e-o-conceito-preliminar-de-curso
+
+# DATASET
+
+https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/indicadores-de-qualidade-da-educacao-superior
+
+CARREGAR MÓDULOS
+```{r}
+library(dplyr)
+library(stringr)
+
+library(ggplot2)
+```
+
+CARREGAR O DATASET
+```{r}
+dados <- read.csv2("DADOS/Portal_CPC_Edição2019_atualizado.csv")
+```
+
+VERIFICAR O TAMANHO DO DATASET
+```{r}
+dim(dados)
+```
+
+VERIFICAR OS NOMES DAS COLUNAS DO DATASET
+```{r}
+colnames(dados)
+```
+
+VERIFICAR OS TIPOS DA VARIÁVEL CPC_FAIXA
+```{r}
+unique(dados$CPC..Faixa.)
+```
+
+EXCLUIR OS VALORES NÃO NUMÉRICOS
+```{r}
+idexcluir <- which(dados$CPC..Faixa. %in% c('', 'SC'))
+
+dados <- dados[-idexcluir,]
+```
+
+
+VERIFICAR A VARIÁVEL DE CÁLCULO
+```{r}
+summary(dados$CPC..Contínuo.)
+```
+
+VERIFICAR A VARIÁVEL DE CÁLCULO
+```{r}
+tb <- c()
+for (vl in dados$CPC..Contínuo.){
+  if (str_count(vl, ',') == 0){
+    tb <- c(tb, vl)
+  }
+}
+
+tb
+```
+
+TRANSFORMAR STRING EM NÚMERO
+```{r}
+lista <- as.double(str_replace(dados$CPC..Contínuo., ',', '.'))
+
+dados$CPC..Contínuo. <- lista
+```
+
+VERIFICAR O HISTROGRAMA DA VARIÁVEL CPC
+```{r}
+ggplot(dados) + 
+  aes(CPC..Contínuo.) +
+  geom_histogram(bins = 50)
+```
+
+VERIFICAR OS CURSOS QUE SERÃO CALCULADOS OS RANKING
+```{r}
+cursos <- dados[which(dados$Código.da.IES == 597), "Área.de.Avaliação"]
+cursos
+```
+
+FUNÇÃO PARA CALCULAR A MÉDIA DO CPC
+```{r}
+calculo_media_cpc <- function(dados, curso){
+  "FUNÇÃO PARA CRIAR O CÁLCULAR A MÉDIA DO CPC
+  ENTRA
+    DATASET E O CURSO
+  SAI
+    A MÉDIA POR CURSO, PÚBLICA, PÚBLICA FEDERAL"
+
+  # FILTRA OS DADOS DA INSTITUIÇÃO
+  ddt <- dados %>% 
+    filter(`Área.de.Avaliação` == curso & `Código.da.IES` == 597)
+  # PEGAR A NOTA
+  nota <- round(ddt$CPC..Contínuo., 4)
+  faixa <- ddt$CPC..Faixa.
+
+  # CALCULAR A MÉDIA PÚBLICA FEDERAL
+  ddt <- dados %>%
+    filter(`Área.de.Avaliação` == curso & `Categoria.Administrativa` %in% c("Pública Federal", 
+                                                                            "Pública Estadual", 
+                                                                            "Pública Municipal" ) )
+  media_p <- round(mean(ddt$CPC..Contínuo.), 4)
+  
+  # CALCULAR A MÉDIA FEDERAL
+  ddt <- dados %>%
+    filter(`Área.de.Avaliação` == curso & `Categoria.Administrativa`== "Pública Federal" )
+  media_pf <- round(mean(ddt$CPC..Contínuo.), 4)
+
+  return( c(nota, faixa, media_p, media_pf))
+}
+```
+
+FAZER LOOP NOS CURSOS E CALCULAR A MÉDIA
+```{r}
+tb <- c()
+for (curso in cursos){
+  vl <- calculo_media_cpc(dados, curso)
+  tb <- rbind(tb, vl)
+}
+
+resultado <- as.data.frame(tb)
+rownames(resultado) <- cursos
+colnames(resultado) <- c(	'CPC_Contínuo', 'faixa', 'média_p', 'média_pf')
+
+resultado
+```
+
+SALVAR O RESULTADO DO CÁLCULO
+```{r}
+write.csv2(resultado, file = 'RESULTADOS/CALCULO - CPC - MÉDIA.csv', na = "", quote = FALSE)
+```

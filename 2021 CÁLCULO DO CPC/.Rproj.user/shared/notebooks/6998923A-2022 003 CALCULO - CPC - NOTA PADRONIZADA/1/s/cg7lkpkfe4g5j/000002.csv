@@ -1,0 +1,3 @@
+"0","ggplot(dados) +"
+"0","  aes(Nota.Padronizada...Oportunidade.de.Ampliação.da.Formação) +"
+"0","  geom_histogram(bins = 50)"

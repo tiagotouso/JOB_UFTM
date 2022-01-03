@@ -1,0 +1,3 @@
+"0","lista <- as.double(str_replace(dados$CPC..Contínuo., ',', '.'))"
+"0",""
+"0","dados$CPC..Contínuo. <- lista"

@@ -1,0 +1,2 @@
+"0","idlinha <- which(is.na(dados[, 'Nota.Padronizada...Organização.Didático.Pedagógica']))"
+"0","dados[idlinha, colunas ]"

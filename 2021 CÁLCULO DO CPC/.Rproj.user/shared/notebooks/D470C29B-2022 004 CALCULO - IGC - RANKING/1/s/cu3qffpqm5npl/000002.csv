@@ -1,0 +1,29 @@
+"0","glimpse(dados)"
+"1","Rows: 2,090"
+"1",""
+"1","
+"
+"1","Columns: 17"
+"1",""
+"1","
+"
+"1","$ Ano                                             [3m[38;5;246m<dbl>[39m[23m 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
+$ `Código da IES`                                 [3m[38;5;246m<dbl>[39m[23m 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, ~
+$ `Nome da IES`                                   [3m[38;5;246m<chr>[39m[23m ""UNIVERSIDADE FEDERAL DE MATO GROSSO"", ""UNIVERSIDAD~
+$ `Sigla da IES`                                  [3m[38;5;246m<chr>[39m[23m ""UFMT"", ""UNB"", ""UFS"", ""UFAM"", ""UFPI"", ""UFOP"", ""UFSC~
+$ `Organização Acadêmica`                         [3m[38;5;246m<chr>[39m[23m ""Universidade"", ""Universidade"", ""Universidade"", ""Un~
+$ `Categoria Administrativa`                      [3m[38;5;246m<chr>[39m[23m ""Pública Federal"", ""Pública Federal"", ""Pública Fede~
+$ `Sigla da UF`                                   [3m[38;5;246m<chr>[39m[23m ""MT"", ""DF"", ""SE"", ""AM"", ""PI"", ""MG"", ""SP"", ""MG"", ""PR~
+$ `Nº de Cursos com CPC no triênio`               [3m[38;5;246m<dbl>[39m[23m 91, 87, 90, 75, 77, 44, 58, 63, 47, 70, 29, 43, 103~
+$ `Alfa (Proporção de Graduação)`                 [3m[38;5;246m<chr>[39m[23m ""0.79335476959999995"", ""0.52436395869999997"", ""0.80~
+$ `Conceito Médio de Graduação`                   [3m[38;5;246m<chr>[39m[23m ""2.9249620906999998"", ""3.2695857893000002"", ""3.1054~
+$ `Beta (Proporção de Mestrado - Equivalente)`    [3m[38;5;246m<chr>[39m[23m ""0.13380493030000001"", ""0.23254033800000001"", ""0.12~
+$ `Conceito Médio de Mestrado`                    [3m[38;5;246m<chr>[39m[23m ""4.2998462327000002"", ""4.5884405054000004"", ""4.2752~
+$ `Gama (Proporção de Doutorandos – Equivalente)` [3m[38;5;246m<chr>[39m[23m ""7.2840300100000005E-2"", ""0.24309570329999999"", ""7.~
+$ `Conceito Médio do doutorado`                   [3m[38;5;246m<chr>[39m[23m ""4.6765927977999997"", ""4.7726399230999998"", ""4.6636~
+$ `IGC (Contínuo)`                                [3m[38;5;246m<dbl>[39m[23m 3.236518, 3.941659, 3.367594, 3.048187, 2.960657, 3~
+$ `IGC (Faixa)`                                   [3m[38;5;246m<chr>[39m[23m ""4"", ""4"", ""4"", ""4"", ""4"", ""4"", ""5"", ""5"", ""4"", ""4"", ""~
+$ TX_OBS                                          [3m[38;5;246m<lgl>[39m[23m NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~"
+"1",""
+"1","
+"

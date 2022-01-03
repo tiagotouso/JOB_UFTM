@@ -1,0 +1,33 @@
+"0","glimpse(dados)"
+"1","Rows: 8,368"
+"1",""
+"1","
+"
+"1","Columns: 21"
+"1",""
+"1","
+"
+"1","$ Ano                                                     [3m[38;5;246m<int>[39m[23m 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019~
+$ Código.da.Área                                          [3m[38;5;246m<int>[39m[23m 28, 6208, 5710, 5, 19, 6, 17, 28, 55, 36, 12, ~
+$ Área.de.Avaliação                                       [3m[38;5;246m<chr>[39m[23m ""NUTRIÇÃO"", ""ENGENHARIA DE PRODUÇÃO"", ""ENGENHA~
+$ Código.da.IES                                           [3m[38;5;246m<int>[39m[23m 1414, 12758, 12758, 1087, 1087, 1087, 1087, 10~
+$ Nome.da.IES                                             [3m[38;5;246m<chr>[39m[23m ""CENTRO UNIVERSITÁRIO SÃO LUCAS"", ""FACULDADE D~
+$ Sigla.da.IES                                            [3m[38;5;246m<chr>[39m[23m ""UniSL"", ""FAEC-PVH"", ""FAEC-PVH"", ""FIMCA"", ""FIM~
+$ Organização.Acadêmica                                   [3m[38;5;246m<chr>[39m[23m ""Centro Universitário"", ""Faculdade"", ""Faculdad~
+$ Categoria.Administrativa                                [3m[38;5;246m<chr>[39m[23m ""Privada com fins lucrativos"", ""Privada sem fi~
+$ Código.do.Curso                                         [3m[38;5;246m<int>[39m[23m 45877, 1193546, 1108254, 73753, 73755, 17955, ~
+$ Modalidade.de.Ensino                                    [3m[38;5;246m<chr>[39m[23m ""Educação Presencial"", ""Educação Presencial"", ~
+$ Código.do.Município                                     [3m[38;5;246m<int>[39m[23m 1100205, 1100205, 1100205, 1100205, 1100205, 1~
+$ Município.do.Curso                                      [3m[38;5;246m<chr>[39m[23m ""Porto Velho"", ""Porto Velho"", ""Porto Velho"", ""~
+$ Sigla.da.UF                                             [3m[38;5;246m<chr>[39m[23m ""RO"", ""RO"", ""RO"", ""RO"", ""RO"", ""RO"", ""RO"", ""RO""~
+$ Nº.de.Concluintes.Inscritos                             [3m[38;5;246m<int>[39m[23m 30, 14, 47, 53, 59, 20, 55, 23, 41, 32, 84, 52~
+$ Nº.de.Concluintes.Participantes                         [3m[38;5;246m<int>[39m[23m 20, 14, 42, 51, 56, 19, 51, 23, 34, 30, 23, 43~
+$ Nº.de.Concluintes.Participantes.com.nota.no.Enem        [3m[38;5;246m<int>[39m[23m 17, 7, 35, 34, 46, 11, 44, 18, 28, 28, 20, 34,~
+$ Proporção.de.Concluintes.participantes.com.nota.no.Enem [3m[38;5;246m<dbl>[39m[23m 0.8500000, 0.5000000, 0.8333333, 0.6666667, 0.~
+$ Nota.Bruta...IDD                                        [3m[38;5;246m<dbl>[39m[23m 1.1832, 0.0782, 0.5448, 0.4580, -0.2168, 0.561~
+$ IDD..Contínuo.                                          [3m[38;5;246m<dbl>[39m[23m 3.2835, 2.5135, 2.9682, 3.0150, 2.3584, 3.0712~
+$ IDD..Faixa.                                             [3m[38;5;246m<chr>[39m[23m ""4"", ""3"", ""4"", ""4"", ""3"", ""4"", ""3"", ""3"", ""3"", ""~
+$ Observação                                              [3m[38;5;246m<chr>[39m[23m """", """", """", """", """", """", """", """", """", """", """", """"~"
+"1",""
+"1","
+"

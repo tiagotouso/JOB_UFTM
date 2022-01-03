@@ -1,0 +1,169 @@
+---
+title: "CÁLCULO DA MÉDIA DO IDD"
+output: html_notebook
+---
+
+# PROBLEMA
+
+Calcular a média dos cursos da UFTM no IDD.
+
+O IDD é um indicador de qualidade que busca mensurar o valor agregado pelo curso ao desenvolvimento dos estudantes concluintes, considerando seus desempenhos no Enade e no Exame Nacional do Ensino Médio (Enem), como medida proxy (aproximação) das suas características de desenvolvimento ao ingressarem no curso de graduação avaliado. Para que um curso tenha o IDD calculado, é preciso que ele atenda às seguintes condições:
+
+possuir no mínimo dois estudantes concluintes participantes do Enade com dados recuperados da base de dados do Enem no período entre o ano de ingresso no curso avaliado e os três anos anteriores;
+atingir 20% do total de estudantes concluintes participantes do Enade com dados recuperados da base de dados do Enem. 
+Desde 2014, o cálculo do IDD ocorre para cada indivíduo que tenha participado do Enade e do Enem, recuperando-se os resultados do estudante nos dois exames a partir do número do CPF.
+
+Esse indicador é calculado desde 2007, como componente do CPC. Em 2016, passou a ser divulgado separadamente, vinculado ao mesmo código de curso em que os estudantes concluintes foram inscritos no Enade.
+
+# DATASET
+
+https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/indicadores-de-qualidade-da-educacao-superior
+
+CARREGAR MÓDULOS
+```{r}
+library(dplyr)
+library(stringr)
+
+library(ggplot2)
+```
+
+CARREGAR O DATASET
+```{r}
+dados <- read.csv2("DADOS/IDD_2019.csv")
+```
+
+VERIFICAR O TAMANHO DO DATASET
+```{r}
+dim(dados)
+```
+
+VERIFICAR OS COLUNAS DO DATASET
+```{r}
+colnames(dados)
+```
+
+VERIFICAR OS NOMES DA LINHAS DO DATASET
+```{r}
+rownames(dados)[1:30]
+```
+
+VERIFICAR OS TIPOS DOS DADOS DO DATASET
+```{r}
+str(dados)
+```
+
+VERIFICAR OS TIPOS DOS DADOS DO DATASET
+```{r}
+glimpse(dados)
+```
+
+VERIFICAR SE O DATASET TEM VALORES MISSING
+```{r}
+sapply(dados, function(x) sum(is.na(x)))
+```
+
+VERIFICAR SE O DATASET TEM VALORES NULOS
+```{r}
+sapply(dados, function(x) sum(is.null(x)))
+```
+
+VERIFICAR OS ID DOS DADOS MISSING
+```{r}
+idna <- which(is.na(dados$IDD..Contínuo.))
+
+idna
+```
+
+VERIFICAR OS DADOS MISSING
+```{r}
+dados[idna, 'IDD..Contínuo.']
+```
+
+VEFIRICAR SE A INSTITUIÇÃO TEM DADOS MISSING
+```{r}
+dados[dados[idna, 'Código.da.IES' ] == 597, ]
+```
+
+EXCLUIR OS DADOS MISSING
+```{r}
+dados <- dados[-idna, ]
+```
+
+
+VERIFICAR A VARIÁVEL QUE SERÁ CALCULADA
+```{r}
+summary(dados$IDD..Contínuo.)
+```
+
+PLOTAR A VARIÁVEL CALCULADA
+```{r}
+ggplot(dados) +
+  aes(IDD..Contínuo.) + 
+  geom_histogram(bins=30)
+```
+
+PLOTAR A VARIÁVEL CALCULADA
+```{r}
+ggplot(dados) +
+  aes(IDD..Contínuo.) + 
+  geom_boxplot()
+```
+
+CRIAR UMA VARIÁVEL COM OS CURSOS DA INSTITUICAO
+```{r}
+cursos <- dados[dados$Código.da.IES == 597, 'Área.de.Avaliação']
+
+cursos
+```
+
+FUNÇÃO PARA CALCULAR A MÉDIA DO IDD
+```{r}
+calculo_media_idd <- function(dados, curso){
+  "FUNÇÃO PARA CALCULAR A MÉDIA DO IDD
+  ENTRA
+    DATASET E O CURSO
+  SAI
+    A MÉDIA POR CURSO, PÚBLICA, PÚBLICA FEDERAL"
+
+  # FILTRA OS DADOS DA INSTITUIÇÃO
+  ddt <- dados %>% 
+    filter(`Área.de.Avaliação` == curso & `Código.da.IES` == 597)
+  # PEGAR A NOTA
+  nota <- round(ddt$IDD..Contínuo., 4)
+  faixa <- ddt$IDD..Faixa.
+
+  # CALCULAR A MÉDIA PÚBLICA FEDERAL
+  ddt <- dados %>%
+    filter(`Área.de.Avaliação` == curso & `Categoria.Administrativa` %in% c("Pública Federal", 
+                                                                            "Pública Estadual", 
+                                                                            "Pública Municipal" ) )
+  media_p <- round(mean(ddt$IDD..Contínuo.), 4)
+  
+  # CALCULAR A MÉDIA FEDERAL
+  ddt <- dados %>%
+    filter(`Área.de.Avaliação` == curso & `Categoria.Administrativa`== "Pública Federal" )
+  media_pf <- round(mean(ddt$IDD..Contínuo.), 4)
+
+  return( c(nota, faixa, media_p, media_pf))
+}
+```
+
+FAZER LOOP NOS CURSOS E CALCULAR A MÉDIA
+```{r}
+tb <- c()
+for (curso in cursos){
+  vl <- calculo_media_idd(dados, curso)
+  tb <- rbind(tb, vl)
+}
+
+resultado <- as.data.frame(tb)
+rownames(resultado) <- cursos
+colnames(resultado) <- c(	'IDD_continuo', 'IDD_faixa', 'média_p', 'média_pf')
+
+resultado
+```
+
+SALVAR O RESULTADO DO CÁLCULO
+```{r}
+write.csv2(resultado, file = 'RESULTADOS/CALCULO - IDD - MÉDIA.csv', na = "", quote = FALSE)
+```

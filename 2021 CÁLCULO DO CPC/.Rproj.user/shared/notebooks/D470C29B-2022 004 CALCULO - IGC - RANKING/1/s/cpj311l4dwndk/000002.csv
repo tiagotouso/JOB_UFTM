@@ -1,0 +1,3 @@
+"0","ggplot(dados, aes(x = `Organização Acadêmica`)) +"
+"0","  geom_bar() +"
+"0","  theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust=1))"

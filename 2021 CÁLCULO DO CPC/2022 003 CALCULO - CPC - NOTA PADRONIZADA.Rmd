@@ -1,0 +1,195 @@
+---
+title: "CÁLCULO DA MÉDIA DA NOTA PADRONIZADA CPC"
+output: html_notebook
+---
+
+# PROBLEMA
+
+Calcular a média das nota padronizadas dos cursos da UFTM no CPC.
+
+O que é o Conceito Preliminar de Curso?
+O conceito preliminar de curso (CPC) é calculado no ano seguinte ao da realização do Enade, em cada área, e considera, além do desempenho dos estudantes, o corpo docente, a infraestrutura e os recursos didático-pedagógicos, entre outros itens.
+
+Mais informações  
+http://portal.mec.gov.br/component/content/article?id=13074:o-que-e-o-conceito-preliminar-de-curso
+
+# DATASET
+
+https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/indicadores-de-qualidade-da-educacao-superior
+
+CARREGAR MÓDULOS
+```{r}
+library(dplyr)
+library(stringr)
+
+library(ggplot2)
+```
+
+CARREGAR O DATASET
+```{r}
+dados <- read.csv2("DADOS/Portal_CPC_Edição2019_atualizado.csv")
+```
+
+VERIFICAR O TAMANHO DO DATASET
+```{r}
+dim(dados)
+```
+
+VERIFICAR OS NOMES DAS COLUNAS DO DATASET
+```{r}
+colnames(dados)
+```
+
+VERIFICAR OS TIPOS DA VARIÁVEL CPC_FAIXA
+```{r}
+unique(dados$CPC..Faixa.)
+```
+
+EXCLUIR OS VALORES MISSING
+```{r}
+idexcluir <- which(dados$CPC..Faixa. %in% c('SC', ''))
+
+dados <- dados[-idexcluir, ]
+```
+
+CRIAR UM VETOR COM AS VARIÁVEIS CHAVE PARA CÁLCULO
+```{r}
+colunas <- c("Nota.Padronizada...Regime.de.Trabalho", 
+             "Nota.Padronizada...Doutores",
+             "Nota.Padronizada...Mestres",
+             "Nota.Padronizada...Oportunidade.de.Ampliação.da.Formação",
+             "Nota.Padronizada...Infraestrutura.e.Instalações.Físicas",
+             "Nota.Padronizada...Organização.Didático.Pedagógica")
+```
+
+VERIFICAR OS TIPOS DE DADOS DA COLUNAS
+```{r}
+glimpse(dados[, colunas])
+```
+
+VERIFICAR SE AS COLUNAS TEM VALORES MISSING
+```{r}
+sapply(dados[, colunas], function(x) sum(is.na(x)))
+```
+
+VERIFICAR SE AS COLUNAS TEM VALORES NULOS
+```{r}
+sapply(dados[, colunas], function(x) sum(is.null(x)))
+```
+
+VERIFICAR O REGISTRO QUE CONTÉM VALORES MISSING
+```{r}
+idlinha <- which(is.na(dados[, 'Nota.Padronizada...Organização.Didático.Pedagógica']))
+dados[idlinha, colunas ]
+```
+
+EXCLUIR OS VALORES MISSING
+```{r}
+dados <- dados[-idlinha, ]
+```
+
+PLOTAR A VARIÁVEL QUE SERÁ CALCULADA
+```{r}
+ggplot(dados) +
+  aes(Nota.Padronizada...Regime.de.Trabalho) +
+  geom_histogram(bins = 50)
+```
+
+PLOTAR A VARIÁVEL QUE SERÁ CALCULADA
+```{r}
+ggplot(dados) +
+  aes(Nota.Padronizada...Doutores) +
+  geom_histogram(bins = 50)
+```
+
+PLOTAR A VARIÁVEL QUE SERÁ CALCULADA
+```{r}
+ggplot(dados) +
+  aes(Nota.Padronizada...Mestres) +
+  geom_histogram(bins = 50)
+```
+
+PLOTAR A VARIÁVEL QUE SERÁ CALCULADA
+```{r}
+ggplot(dados) +
+  aes(Nota.Padronizada...Oportunidade.de.Ampliação.da.Formação) +
+  geom_histogram(bins = 50)
+```
+
+PLOTAR A VARIÁVEL QUE SERÁ CALCULADA
+```{r}
+ggplot(dados) +
+  aes(Nota.Padronizada...Infraestrutura.e.Instalações.Físicas) +
+  geom_histogram(bins = 50)
+```
+
+PLOTAR A VARIÁVEL QUE SERÁ CALCULADA
+```{r}
+ggplot(dados) +
+  aes(Nota.Padronizada...Organização.Didático.Pedagógica) +
+  geom_histogram(bins = 50)
+```
+
+VERIFICAR OS CURSOS QUE SERÃO CALCULADOS OS RANKING
+```{r}
+cursos <- dados[which(dados$Código.da.IES == 597), "Área.de.Avaliação"]
+cursos
+```
+
+CRIAR A FUNÇÃO PARA FAZER O CÁLCULO DA NOTA PADRONIZADA
+```{r}
+calculo_ranking_nota_padronizada <- function(dados, coluna, cursos){
+  "FUNÇÃO PARA FAZER O CÁLCULO DA NOTRA PADRONIZADA
+  ENTRA
+    DATASET, A COLUNA DO CÁLCULO E OS CURSOS
+  SAI
+    NOTA, MÉDIA PÚBLICA, MÉDIA PÚBLICA FEDERAL"
+  
+  tb <- c()
+  for (curso in cursos){
+
+    # PEGAR A NOTA DA INSTITUIÇÃO
+    ddt <- dados %>% 
+      filter(`Área.de.Avaliação` == curso & 
+               `Código.da.IES` == 597)
+    nota <- ddt[, coluna]
+    
+    # PEGAR A MÉDIA PÚBLICA
+    ddt <- dados[dados['Área.de.Avaliação'] == curso, ]
+    ddt <- ddt[ddt[, 'Categoria.Administrativa'] %in% c("Pública Federal", "Pública Estadual", "Pública Municipal" ), ]
+    media_p <- round(mean(ddt[, coluna]), 4)
+  
+    # PEGAR A MÉDIA PÚBLICA FEDERAL
+    ddt <- dados[dados['Área.de.Avaliação'] == curso, ]
+    ddt <- ddt[ddt[, 'Categoria.Administrativa'] == "Pública Federal", ]
+    media_pf <- round(mean(ddt[, coluna]), 4)
+      
+    linha <- c(nota, media_p, media_pf)
+    tb <- rbind(tb, linha)
+  }
+  return(tb)
+}
+```
+
+LOOP NAS VARIÁVEIS PARA FAZER OS CÁLCULOS
+```{r}
+for (coluna in colunas){
+  
+  tb <- calculo_ranking_nota_padronizada(dados, coluna, cursos)
+
+  resultado <- as.data.frame(tb)
+  rownames(resultado) <- cursos
+  colnames(resultado) <- c(coluna, 'media_p', 'media_pf')
+  resultado
+  
+  narquivo <- paste('RESULTADOS/CALCULO - CPC - NOTA PADRONIZADA - ', str_remove(coluna, 'Nota.Padronizada...'), '.csv', sep='')
+  
+  write.csv2(resultado, file = narquivo, na = "", quote = FALSE)
+}
+
+```
+
+RESULTADO FINAL
+```{r}
+resultado
+```

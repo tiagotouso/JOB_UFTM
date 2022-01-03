@@ -1,0 +1,4 @@
+"0","ddt <- dados %>% filter( Área.de.Avaliação %in% cursos)"
+"0","ggplot(ddt) + "
+"0","  aes(x = CPC..Contínuo.) +"
+"0","  geom_boxplot()"

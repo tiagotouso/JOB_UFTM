@@ -1,0 +1,171 @@
+---
+title: "CÁLCULO DO MÉDIA DO ENADE"
+output: html_notebook
+---
+
+# PROBLEMA
+
+Calcular a média dos cursos da UFTM no ENADE. 
+
+O Exame Nacional de Desempenho dos Estudantes (Enade) avalia o rendimento dos concluintes dos cursos de graduação em relação aos conteúdos programáticos previstos nas diretrizes curriculares dos cursos, o desenvolvimento de competências e habilidades necessárias ao aprofundamento da formação geral e profissional, e o nível de atualização dos estudantes com relação à realidade brasileira e mundial.
+
+# DATASET
+https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/indicadores-de-qualidade-da-educacao-superior
+
+CARREGAR OS MÓDULOS
+```{r}
+library(readxl)
+library(dplyr)
+
+library(ggplot2)
+library(ggcorrplot)
+```
+
+CARREGAR O DATASET
+```{r}
+dados <- read.csv2("DADOS/Conceito_Enade_2019.csv")
+dados <- as.data.frame(dados)
+```
+
+VERIFICAR O TAMANHO DO DATASET
+```{r}
+dim(dados)
+```
+
+VERIFICAR O NOME DAS COLUNAS DO DATASET
+```{r}
+colnames(dados)
+```
+
+VERIFICAR O NOME DAS COLUNAS DO DATASET
+```{r}
+rownames(dados)[1:20]
+```
+
+VERIFICAR OS TIPOS DOS DADOS DO DATASET
+```{r}
+str(dados)
+```
+
+VERIFICAR OS TIPOS DOS DADOS DO DATASET
+```{r}
+glimpse(dados)
+```
+
+VERIFICAR A QUANTIDADE DE VALORES MISSING NO DATASET
+```{r}
+sapply(dados, function(x) sum(is.na(x)))
+```
+
+VERIFICAR A QUANTIDADE DE VALORES NULOS NO DATASET
+```{r}
+sapply(dados, function(x) sum(is.null(x)))
+```
+
+VERIFICAR OS REGISTROS QUE CONTÉM DADOS MISSING
+```{r}
+idna <- which(is.na(dados$Conceito.Enade..Contínuo.))
+
+dados[idna, ]
+```
+
+VERIFICAR E A INSTITUIÇÃO TEM DADOS MISSING
+```{r}
+ddt <- dados[idna, ]
+ddt[which(ddt$Código.da.IES == 597), ]
+```
+
+VERIFICAR OS VALORES UNICOS DA COLUNA
+```{r}
+unique(dados$Conceito.Enade..Faixa.)
+```
+
+VERIFICAR A QUANTIDADE DE VALORES NÃO NUMÉRICOS
+```{r}
+dim(dados[dados$Conceito.Enade..Faixa. %in% c('', 'SC'), ])
+```
+
+EXCLUIR OS REGISTROS COM VALORES NÃO NUMÉRICOS
+```{r}
+dados <- dados[-idna, ]
+```
+
+VERIFICAR A VARIÁVEL QUE SERÁ CALCULADA
+```{r}
+summary(dados$Conceito.Enade..Contínuo.)
+```
+
+PLOTAR HISTROGRAMA
+```{r}
+ggplot(dados) +
+  aes(Conceito.Enade..Contínuo.) + 
+  geom_histogram(bins=30)
+```
+
+PLOTAR O BOXPLOT
+```{r}
+ggplot(dados) +
+  aes(Conceito.Enade..Contínuo.) + 
+  geom_boxplot()
+```
+
+SELECIONAR OS CURSOS DA INSTITUIÇÃO
+```{r}
+cursos <- dados[dados['Código.da.IES'] == 597, 'Área.de.Avaliação' ]
+
+cursos
+```
+
+FUNÇÃO PARA CALCULAR AS MÉDIAS POR CURSO DO ENADE
+```{r}
+calculo_media_enade <- function(dados, curso){
+  "FUNÇÃO PARA CALCULAR AS MÉDIAS DO ENADE
+  ENTRA
+    DATASET 
+  SAI
+    RANKING POR: NOTA, FAIXA, PÚBLICA E PÚBLICA FEDERAL"
+
+  # FILTRA OS DADOS DA INSTITUIÇÃO
+  ddt <- dados %>% 
+    filter( `Área.de.Avaliação` == curso & `Código.da.IES` == 597)
+  # PEGAR A NOTA E A FAIXA
+  nota <- ddt$`Conceito.Enade..Contínuo.`
+  faixa <- ddt$`Conceito.Enade..Contínuo.`
+  
+  # CALCULAR A MÉDIA PÚBLICA
+  ddt <- dados %>%
+    filter( `Área.de.Avaliação` == curso & `Categoria.Administrativa` %in% c("Pública Federal", 
+                                                                            "Pública Estadual", 
+                                                                            "Pública Municipal" ) )
+  media_p <- round(mean(ddt$`Conceito.Enade..Contínuo.`), 4)
+
+  # CALCULAR A MÉDIA PÚBLICA FEDERAL
+  ddt <- dados %>%
+  filter( `Área.de.Avaliação` == curso & `Categoria.Administrativa`== "Pública Federal" )
+  media_pf <- round(mean(ddt$`Conceito.Enade..Contínuo.`), 4)
+
+
+  return (c(nota, faixa, media_p, media_pf))
+}
+```
+
+CALCULAR A MÉDIA
+```{r}
+tb <- c()
+for (curso in cursos){
+  vl <- calculo_media_enade(dados, curso)
+  tb <- rbind(tb, vl)
+}
+
+
+resultado <- as.data.frame(tb)
+colnames(resultado) <- c('ENADE (Contínuo)', 'ENADE (Faixa)', 'media_p', 'media_pf')
+rownames(resultado) <- cursos
+
+resultado
+```
+
+SALVAR O RESULTADO DO CÁLCULO
+```{r}
+write.csv2(resultado, file = 'RESULTADOS/CALCULO - ENADE - MEDIA.csv', na = "", quote = FALSE)
+```

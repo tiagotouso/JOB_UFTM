@@ -1,0 +1,289 @@
+---
+title: "2021 Cálculo do IGC Ranking"
+output: html_notebook
+---
+
+# PROBLEMA
+
+Calcular a posição dos cursos da UFTM no ranking IGC.  
+
+Para conhecer o desempenho das instituições de ensino superior do país, os estudantes podem consultar, entre outros indicadores, o Índice Geral de Cursos (IGC). O instrumento é construído com base numa média ponderada das notas dos cursos de graduação e pós-graduação de cada instituição. Assim, sintetiza num único indicador a qualidade de todos os cursos de graduação, mestrado e doutorado da mesma instituição de ensino. O IGC é divulgado anualmente pelo Inep/MEC, imediatamente após a divulgação dos resultados do Enade.
+
+# DATASET
+https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/indicadores-de-qualidade-da-educacao-superior
+
+CARREGAR OS MÓDULOS
+```{r}
+library(readxl)
+library(dplyr)
+
+library(ggplot2)
+library(ggcorrplot)
+```
+
+CARREGAR O DATASET
+```{r}
+dados <- read_excel("DADOS/IGC_2019.xlsx")
+dados <- as.data.frame(dados)
+```
+
+VERIFICAR O NOME DAS COLUNAS DO DATASET
+```{r}
+colnames(dados)
+```
+
+VERIFICAR O NOME DAS LINHAS
+```{r}
+rownames(dados)[1:20]
+```
+
+VERIFICAR O TAMANHA DO DATASET
+```{r}
+dim(dados)
+```
+
+VERIFICAR OS TIPOS DE DADOS DO DATASET
+```{r}
+str(dados)
+```
+
+VERIFICAR OS TIPOS DE DADOS DO DATASET
+```{r}
+glimpse(dados)
+```
+
+VERIFICAR A QUANTIDADE DE VALORES ÚNICOS
+```{r}
+sapply(dados, function(x) length(unique(x)))
+```
+
+VERIFICAR O RESUMO DO DATASET
+```{r}
+summary(dados)
+```
+
+VERIFICAR A QUANTIDADE DE VALORES MISSING
+```{r}
+sapply(dados, function(x) sum(is.na(x)))
+```
+
+VERIFICAR A QUANTIDADE DE VALORES NULOS
+```{r}
+sapply(dados, function(x) sum(is.null(x)))
+```
+
+VERIFICAR AS PRIMEIRAS LINHAS DO DATASET
+```{r paged.print=FALSE}
+head(dados, 5)
+```
+
+VERIFICAR AS ÚLTIMAS LINHAS DO DATASET
+```{r paged.print=FALSE}
+tail(dados)
+```
+
+VERIFIAR VALORES ALEATÓRIOS DO DATASET
+```{r paged.print=FALSE}
+sample_n(dados, 5)
+```
+
+VERIFICAR A QUANTIDADE DE VALORES MISSING DA VARIÁVEL
+```{r}
+dim(dados[is.na(dados$`IGC (Contínuo)`), ])
+```
+
+VERIFICAR OS REGISTROS QUE TEM VALORES MISSING
+```{r paged.print=FALSE}
+dados[is.na(dados$`IGC (Contínuo)`), ]
+```
+
+EXCLUIR OS REGISTROS COM VALORES MISSING
+```{r}
+dados <- dados[!is.na(dados$`IGC (Contínuo)`), ]
+```
+
+PLOTAR HISTROGRAMA
+```{r}
+ggplot(dados) + 
+  aes(x = `IGC (Contínuo)`) + 
+  geom_histogram()
+```
+
+PLOTAR BOXPLOT
+```{r}
+ggplot(dados) + 
+  aes(x = `IGC (Contínuo)`) + 
+  geom_boxplot()
+```
+
+VERIFICAR A MÉDIA POR UF
+```{r paged.print=FALSE}
+filtro <- dados %>% 
+  group_by(`Sigla da UF`) %>%  
+  summarise( media = mean(`IGC (Contínuo)`)) %>% 
+  arrange(media)
+
+
+levels <- filtro$`Sigla da UF`
+filtro$`Sigla da UF` <- factor(filtro$`Sigla da UF`, levels=levels, ordered=TRUE)
+
+filtro
+```
+
+PLOTAR A MÉDIA POR UF
+```{r}
+filtro %>%
+  ggplot(aes(x = `Sigla da UF`, y = media)) +
+  geom_col()
+```
+
+PLOTAR O BOXPLOT POR UF
+```{r}
+ggplot(dados, aes(x = `IGC (Contínuo)`, y = `Sigla da UF`)) +
+  geom_boxplot()
+```
+
+VERIFICAR A MÉDIA POR CATEGORIA ADM
+```{r paged.print=FALSE}
+filtro <- dados %>% 
+  group_by(`Categoria Administrativa`) %>%  
+  summarise( media = mean(`IGC (Contínuo)`)) %>% 
+  arrange(media)
+
+
+levels <- filtro$`Categoria Administrativa`
+filtro$`Categoria Administrativa` <- factor(filtro$`Categoria Administrativa`, 
+                                            levels=levels, ordered=TRUE)
+
+filtro
+```
+
+PLOTAR A MÉDIA POR CATEGORIA ADM
+```{r}
+filtro %>%
+  ggplot(aes(x = `Categoria Administrativa`, y = media)) +
+  geom_col() + 
+  theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust=1))
+```
+
+PLOTAR O BOXPLOT POR CATEGORIA ADM
+```{r}
+ggplot(dados, aes(x = `IGC (Contínuo)`, y = `Categoria Administrativa`)) +
+  geom_boxplot()
+```
+
+VERIFICAR A MÉDIA POR ORGANIZAÇÃO ACADÊMICA
+```{r paged.print=FALSE}
+filtro <- dados %>% 
+  group_by(`Organização Acadêmica`) %>%  
+  summarise( media = mean(`IGC (Contínuo)`)) %>% 
+  arrange(media)
+
+
+levels <- filtro$`Organização Acadêmica`
+filtro$`Organização Acadêmica` <- factor(filtro$`Organização Acadêmica`, 
+                                            levels=levels, ordered=TRUE)
+
+filtro
+```
+
+PLOTAR A MÉDIA POR ORGANIZAÇÃO ACADÊMICA
+```{r}
+filtro %>%
+  ggplot(aes(x = `Organização Acadêmica`, y = media)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust=1))
+```
+
+PLOTAR O BOXPLOT POR ORGANIZAÇÃO ACADÊMICA
+```{r}
+ggplot(dados, aes(x = `IGC (Contínuo)`, y = `Organização Acadêmica`)) +
+  geom_boxplot()
+```
+
+PLOTAR A QUANTIDADE DE ORGANIZAÇÃO ACADÊMICA
+```{r}
+ggplot(dados, aes(x = `Organização Acadêmica`)) +
+  geom_bar() +
+  theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust=1))
+```
+
+CONVERTER AS VARIÁVEIS DE TEXTO PARA NUMÉRICO
+```{r}
+
+colunas <- c("Nº de Cursos com CPC no triênio",            
+"Alfa (Proporção de Graduação)",                
+"Conceito Médio de Graduação",                  
+"Beta (Proporção de Mestrado - Equivalente)",   
+"Conceito Médio de Mestrado",                   
+"Gama (Proporção de Doutorandos – Equivalente)",
+"Conceito Médio do doutorado",                  
+"IGC (Contínuo)",                               
+"IGC (Faixa)" )
+
+for (cl in colunas){
+  dados[cl] <- as.double(dados[, cl])
+}
+
+cor(dados[, colunas])
+```
+
+PLOTAR AS CORRELAÇÕES
+```{r}
+ggcorrplot(cor(dados[, colunas]))
+```
+
+FUNÇÃO PARA CRIAR O RANKING DO IGC
+```{r}
+calculo_ranking_igc <- function(dados){
+  "FUNÇÃO PARA CRIAR O RAMKING DO IGC
+  ENTRA
+    DATASET 
+  SAI
+    RANKING POR: BR, REGIÃO, UF; NOTA, FAIXA DO CPC"
+
+  # FILTRA OS DADOS DA INSTITUIÇÃO
+  ddt <- dados %>% 
+    filter(`Código da IES` == 597)
+  # PEGAR A NOTA E A FAIXA
+  nota <- ddt$`IGC (Contínuo)`
+  faixa <- ddt$`IGC (Contínuo)`
+  
+  # PEGAR A POSIÇÃO DO RANKING BR
+  ddt <- dados %>%
+    arrange(desc(`IGC (Contínuo)`), `Nome da IES`)
+  
+  ranking_br <- which(ddt$`Código da IES` == 597)
+
+  # PEGAR A POSIÇÃO DO RANKING REGIÃO
+  ddt <- dados %>%
+  filter(`Sigla da UF` %in% c('MG', 'SP', 'RJ', 'ES')) %>%
+  arrange(desc(`IGC (Contínuo)`), `Nome da IES`)
+  
+  ranking_regiao <- which(ddt$`Código da IES` == 597)
+  
+  # PEGAR A POSIÇÃO DO RANKING UF
+  ddt <- dados %>%
+  filter(`Sigla da UF` == 'MG') %>%
+  arrange(desc(`IGC (Contínuo)`), `Nome da IES`)
+
+  ranking_uf <- which(ddt$`Código da IES` == 597)
+  
+  return (c(ranking_br, ranking_regiao, ranking_uf, nota, faixa))
+}
+```
+
+CALCULAR O RANKING
+```{r}
+tb <- calculo_ranking_igc(dados)
+
+resultado <- as.data.frame(t(tb))
+colnames(resultado) <- c('ranking_br', 'ranking_regiao', 'ranking_uf', 'IGC (Contínuo)', 'IGC (Faixa)')
+
+resultado
+```
+
+SALVAR O RESULTADO DO CÁLCULO
+```{r}
+write.csv2(resultado, file = 'RESULTADOS/CALCULO - IGC - RANKING.csv', na = "", quote = FALSE)
+```

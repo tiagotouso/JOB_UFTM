@@ -1,0 +1,3 @@
+"0","filtro %>%"
+"0","  ggplot(aes(x = `Sigla da UF`, y = media)) +"
+"0","  geom_col()"

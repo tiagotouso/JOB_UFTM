@@ -1,0 +1,34 @@
+"0","glimpse(dados)"
+"1","Rows: 8,368"
+"1",""
+"1","
+"
+"1","Columns: 22"
+"1",""
+"1","
+"
+"1","$ Ano                              [3m[38;5;246m<int>[39m[23m 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
+$ Código.da.Área                   [3m[38;5;246m<int>[39m[23m 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, ~
+$ Área.de.Avaliação                [3m[38;5;246m<chr>[39m[23m ""MEDICINA VETERINÁRIA"", ""MEDICINA VETERINÁRIA"", ""MEDICINA VETERINÁRIA~
+$ Código.da.IES                    [3m[38;5;246m<int>[39m[23m 1, 1, 2, 3, 3, 5, 5, 8, 9, 10, 10, 13, 17, 20, 24, 27, 29, 30, 43, 56~
+$ Nome.da.IES                      [3m[38;5;246m<chr>[39m[23m ""UNIVERSIDADE FEDERAL DE MATO GROSSO"", ""UNIVERSIDADE FEDERAL DE MATO ~
+$ Sigla.da.IES                     [3m[38;5;246m<chr>[39m[23m ""UFMT"", ""UFMT"", ""UNB"", ""UFS"", ""UFS"", ""UFPI"", ""UFPI"", ""UFV"", ""UEL"", ""P~
+$ Organização.Acadêmica            [3m[38;5;246m<chr>[39m[23m ""Universidade"", ""Universidade"", ""Universidade"", ""Universidade"", ""Univ~
+$ Categoria.Administrativa         [3m[38;5;246m<chr>[39m[23m ""Pública Federal"", ""Pública Federal"", ""Pública Federal"", ""Pública Fed~
+$ Código.do.Curso                  [3m[38;5;246m<int>[39m[23m 37, 100763, 18031, 1108067, 1321453, 504, 102675, 695, 777, 60123, 12~
+$ Modalidade.de.Ensino             [3m[38;5;246m<chr>[39m[23m ""Educação Presencial"", ""Educação Presencial"", ""Educação Presencial"", ~
+$ Código.do.Município              [3m[38;5;246m<int>[39m[23m 5103403, 5107909, 5300108, 2806701, 2804508, 2211001, 2201903, 317130~
+$ Município.do.Curso               [3m[38;5;246m<chr>[39m[23m ""Cuiabá"", ""Sinop"", ""Brasília"", ""São Cristóvão"", ""Nossa Senhora da Gló~
+$ Sigla.da.UF                      [3m[38;5;246m<chr>[39m[23m ""MT"", ""MT"", ""DF"", ""SE"", ""SE"", ""PI"", ""PI"", ""MG"", ""PR"", ""PR"", ""PR"", ""RS~
+$ Nº.de.Concluintes.Inscritos      [3m[38;5;246m<int>[39m[23m 23, 46, 129, 47, 28, 64, 68, 62, 80, 34, 79, 122, 102, 92, 42, 55, 87~
+$ Nº..de.Concluintes.Participantes [3m[38;5;246m<int>[39m[23m 20, 39, 119, 39, 25, 62, 65, 58, 76, 33, 71, 120, 93, 88, 42, 54, 68,~
+$ Nota.Bruta...FG                  [3m[38;5;246m<dbl>[39m[23m 42.8150, 42.1128, 50.6050, 45.7744, 43.5400, 43.2355, 38.7200, 60.963~
+$ Nota.Padronizada...FG            [3m[38;5;246m<dbl>[39m[23m 2.7573, 2.6390, 4.0697, 3.2559, 2.8795, 2.8282, 2.0675, 5.0000, 4.326~
+$ Nota.Bruta...CE                  [3m[38;5;246m<dbl>[39m[23m 57.8000, 55.7282, 59.0025, 56.9667, 51.7800, 54.5226, 48.7369, 67.139~
+$ Nota.Padronizada...CE            [3m[38;5;246m<dbl>[39m[23m 3.1363, 2.7652, 3.3516, 2.9870, 2.0580, 2.5492, 1.5130, 4.8091, 4.586~
+$ Conceito.Enade..Contínuo.        [3m[38;5;246m<dbl>[39m[23m 3.0415, 2.7336, 3.5312, 3.0542, 2.2634, 2.6190, 1.6516, 4.8568, 4.521~
+$ Conceito.Enade..Faixa.           [3m[38;5;246m<chr>[39m[23m ""4"", ""3"", ""4"", ""4"", ""3"", ""3"", ""2"", ""5"", ""5"", ""3"", ""3"", ""3"", ""4"", ""2"",~
+$ Observação                       [3m[38;5;246m<chr>[39m[23m """", """", """", """", """", """", """", """", """", """", """", """", """", """", """", """", """", ""~"
+"1",""
+"1","
+"

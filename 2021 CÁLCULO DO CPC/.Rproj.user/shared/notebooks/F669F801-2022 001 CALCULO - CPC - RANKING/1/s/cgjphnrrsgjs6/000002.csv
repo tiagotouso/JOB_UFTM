@@ -1,0 +1,5 @@
+"0","ddt <- dados[idverificar,] %>% "
+"0","  filter(Código.da.IES == 579) %>% "
+"0","  select(Nome.da.IES)"
+"0",""
+"0","unique(ddt)"

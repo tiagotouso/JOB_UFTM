@@ -1,0 +1,3 @@
+"0","ddt %>% "
+"0","  group_by(`Categoria.Administrativa`, `Organização.Acadêmica`) %>% "
+"0","  summarise(n = n(), .groups = 'drop')"

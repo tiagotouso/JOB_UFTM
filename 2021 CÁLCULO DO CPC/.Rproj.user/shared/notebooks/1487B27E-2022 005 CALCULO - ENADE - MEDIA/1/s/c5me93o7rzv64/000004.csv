@@ -1,0 +1,3 @@
+"0","idna <- which(is.na(dados$Conceito.Enade..Contínuo.))"
+"0",""
+"0","dados[idna, ]"

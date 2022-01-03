@@ -1,0 +1,2 @@
+"0","ddt <- dados[idna, ]"
+"0","ddt[which(ddt$Código.da.IES == 597), ]"

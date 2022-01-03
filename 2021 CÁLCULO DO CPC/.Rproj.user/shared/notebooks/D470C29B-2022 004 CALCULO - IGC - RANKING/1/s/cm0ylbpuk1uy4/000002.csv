@@ -1,0 +1,2 @@
+"0","dados <- read_excel(""DADOS/IGC_2019.xlsx"")"
+"0","dados <- as.data.frame(dados)"

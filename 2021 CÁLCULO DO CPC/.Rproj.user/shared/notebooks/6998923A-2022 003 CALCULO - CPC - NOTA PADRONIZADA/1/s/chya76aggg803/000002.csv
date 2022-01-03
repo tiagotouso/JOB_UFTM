@@ -1,0 +1,3 @@
+"0","ggplot(dados) +"
+"0","  aes(Nota.Padronizada...Mestres) +"
+"0","  geom_histogram(bins = 50)"

@@ -1,0 +1,232 @@
+---
+title: "CÁLCULO O RANKING CPC"
+output: html_notebook
+---
+
+# PROBLEMA
+
+Calcular a posição dos cursos da UFTM no ranking CPC.  
+
+O que é o Conceito Preliminar de Curso?
+O conceito preliminar de curso (CPC) é calculado no ano seguinte ao da realização do Enade, em cada área, e considera, além do desempenho dos estudantes, o corpo docente, a infraestrutura e os recursos didático-pedagógicos, entre outros itens.
+
+Mais informações  
+http://portal.mec.gov.br/component/content/article?id=13074:o-que-e-o-conceito-preliminar-de-curso
+
+# DATASET
+
+https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/indicadores-de-qualidade-da-educacao-superior
+
+CARREGAR MÓDULOS
+```{r}
+library(dplyr)
+library(stringr)
+
+library(ggplot2)
+```
+
+CARREGAR O DATASET
+```{r}
+dados <- read.csv2("DADOS/Portal_CPC_Edição2019_atualizado.csv")
+```
+
+VERIFICAR O TAMANHO DO DATASET
+```{r}
+dim(dados)
+```
+
+VERIFICAR OS NOMES DAS COLUNAS DO DATASET
+```{r}
+colnames(dados)
+```
+
+VERIFICAR OS NOMES DA LINHAS DO DATASET
+```{r}
+rownames(dados)[1:20]
+```
+
+VERIFICAR OS TIPOS DE CADA COLUNA DO DATASET
+```{r}
+str(dados)
+```
+
+VERIFICAR OS TIPOS DE CADA COLUNA DO DATASET
+```{r}
+glimpse(dados)
+```
+
+VERIFICAR A QUANTIDADE DE VALORES MISSING
+```{r}
+sapply(dados, function(x) sum(is.na(x)))
+```
+
+VERIFICAR A QUANTIDADE DE VALORES NULOS
+```{r}
+sapply(dados, function(x) sum(is.null(x)))
+```
+
+VERIFICAR OS TIPOS DA VARIÁVEL CPC_FAIXA
+```{r}
+unique(dados$CPC..Faixa.)
+```
+
+VERIFICAR OS VALORES NÃO NUMÉRICOS DA VARIÁVEL CPC_FAIXA
+```{r}
+idverificar <- which(dados$CPC..Faixa. %in% c('SC', ''))
+
+ddt <-dados[idverificar, c("Organização.Acadêmica", "Categoria.Administrativa" , "Sigla.da.IES", "CPC..Contínuo.")]
+
+ddt
+```
+
+GRUPAR E CONTAR OS VALORES NÃO NUMÉRICOS DA VARIÁVEL CPC_FAIXA
+```{r}
+ddt %>% 
+  group_by(`Categoria.Administrativa`, `Organização.Acadêmica`) %>% 
+  summarise(n = n(), .groups = 'drop')
+```
+
+VERIFICAR SE A UFTM POSSUI ALGUM VALOR NÃO NUMÉRICOS DA VARIÁVEL CPC_FAIXA
+```{r}
+ddt <- dados[idverificar,] %>% 
+  filter(Código.da.IES == 579) %>% 
+  select(Nome.da.IES)
+
+unique(ddt)
+```
+
+VERIFICAR AS INSTITUIÇÕES QUE NÃO POSSUI VALORES NUMÉRICOS DA VARIÁVEL CPC_FAIXA
+```{r}
+ddt <- dados[idverificar,] %>% 
+  filter(Código.da.IES != 579) %>% 
+  select(Nome.da.IES)
+
+unique(ddt[order(ddt),])
+```
+
+EXCLUIR OS REGISTROS NÃO NUMÉRICOS
+```{r}
+dados <- dados[-idverificar, ]
+```
+
+VERIFICAR SE TODOS VALORES SÃO NUMÉRICOS
+```{r}
+tb <- c()
+for (vl in dados$CPC..Contínuo.){
+  if (str_count(vl, ',') == 0){
+    tb <- append(x = tb, values = vl)
+  }
+}
+
+tb
+```
+
+TRANSFORMAR OS VALORES DE TEXTO PARA NUMÉRICOS
+```{r}
+dados$CPC..Faixa. <- as.double(dados$CPC..Faixa.)
+```
+
+TRANSFORMAR OS VALORES DE TEXTO PARA NUMÉRICOS
+```{r}
+lista <- dados$CPC..Contínuo.
+
+listanumerica <- as.double(str_replace(lista, ',', '.'))
+
+dados$CPC..Contínuo. <- listanumerica
+```
+
+VERIFICAR O HISTROGRAMA DA VARIÁVEL CPC
+```{r}
+ggplot(dados) + 
+  aes(CPC..Contínuo.) +
+  geom_histogram(bins = 50)
+```
+
+VERIFICAR O BOXPLOT DA VARIÁVEL CPC
+```{r}
+ggplot(dados) + 
+  aes(x = CPC..Contínuo.) +
+  geom_boxplot()
+```
+
+VERIFICAR OS CURSOS QUE SERÃO CALCULADOS OS RANKING
+```{r}
+cursos <- dados[which(dados$Código.da.IES == 597), "Área.de.Avaliação"]
+cursos
+```
+
+VERIFICAR O BOXPLOT DA VARIÁVEL CPC - SOMENTE PARA OS CURSOS
+```{r}
+ddt <- dados %>% filter( Área.de.Avaliação %in% cursos)
+ggplot(ddt) + 
+  aes(x = CPC..Contínuo.) +
+  geom_boxplot()
+```
+
+VERIFICAR O BOXPLOT DA VARIÁVEL CPC - SOMENTE PARA OS CURSOS
+```{r}
+ddt <- dados %>% filter( Área.de.Avaliação %in% cursos)
+ggplot(ddt) + 
+  aes(x = CPC..Contínuo., y = Área.de.Avaliação) +
+  geom_boxplot()
+```
+FUNÇÃO PARA CRIAR O RANKING DO CPC
+```{r}
+calculo_ranking_cpc <- function(dados, curso){
+  "FUNÇÃO PARA CRIAR O RAMKING DO CPC
+  ENTRA
+    DATASET E O CURSO
+  SAI
+    RANKING POR: BR, REGIÃO, UF; NOTA, FAIXA DO CPC"
+
+  # FILTRA OS DADOS DA INSTITUIÇÃO
+  ddt <- dados %>% 
+    filter(`Área.de.Avaliação` == curso & `Código.da.IES` == 597)
+  # PEGAR A NOTA E A FAIXA
+  nota <- ddt$CPC..Contínuo.
+  faixa <- ddt$CPC..Faixa.
+  
+  # PEGAR A POSIÇÃO DO RANKING BR
+  ddt <- dados %>% 
+    filter(`Área.de.Avaliação` == curso) %>% 
+    arrange(desc(CPC..Contínuo.), `Nome.da.IES`)
+  
+  ranking_br <- which(ddt$Código.da.IES == 597)
+  
+  # PEGAR A POSIÇÃO DO RANKING REGIÃO
+  ddt <- dados %>% 
+  filter(`Área.de.Avaliação` == curso, `Sigla.da.UF` %in% c('MG', 'SP', 'RJ', 'ES')) %>% 
+  arrange(desc(CPC..Contínuo.), `Nome.da.IES`)
+  
+  ranking_regiao <- which(ddt$Código.da.IES == 597)
+  
+  # PEGAR A POSIÇÃO DO RANKING UF
+  ddt <- dados %>% 
+  filter(`Área.de.Avaliação` == curso, `Sigla.da.UF` == 'MG') %>% 
+  arrange(desc(CPC..Contínuo.), `Nome.da.IES`)
+  
+  ranking_uf <- which(ddt$Código.da.IES == 597)
+  
+  return( c(ranking_br, ranking_regiao, ranking_uf, nota, faixa))
+}
+```
+
+FAZER LOOP NOS CURSOS E CALCULAR O RANKING
+```{r}
+tb <- c()
+for (curso in cursos){
+  vl <- calculo_ranking_cpc(dados, curso)
+  tb <- rbind(tb, vl)
+}
+
+resultado <- as.data.frame(tb)
+rownames(resultado) <- cursos
+colnames(resultado) <- c('ranking_br', 'ranking_regiao', 'ranking_uf', 	'CPC_Contínuo', 'CPC_Faixa')
+
+resultado
+```
+
+SALVAR O RESULTADO DO CÁLCULO
+```{r}
+write.csv2(resultado, file = 'RESULTADOS/CALCULO - CPC - RANKING.csv', na = "", quote = FALSE)
+```

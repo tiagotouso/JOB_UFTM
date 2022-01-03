@@ -1,0 +1,29 @@
+"0","filtro <- dados %>% "
+"0","  group_by(`Categoria Administrativa`) %>%  "
+"0","  summarise( media = mean(`IGC (Contínuo)`)) %>% "
+"0","  arrange(media)"
+"0",""
+"0",""
+"0","levels <- filtro$`Categoria Administrativa`"
+"0","filtro$`Categoria Administrativa` <- factor(filtro$`Categoria Administrativa`, "
+"0","                                            levels=levels, ordered=TRUE)"
+"0",""
+"0","filtro"
+"1","[38;5;246m# A tibble: 6 x 2[39m
+"
+"1","  `Categoria Administrativa`  media
+"
+"1","  [3m[38;5;246m<ord>[39m[23m                       [3m[38;5;246m<dbl>[39m[23m
+"
+"1","[38;5;250m1[39m Especial                     2.21
+"
+"1","[38;5;250m2[39m Pública Municipal            2.33
+"
+"1","[38;5;250m3[39m Privada com fins lucrativos  2.48
+"
+"1","[38;5;250m4[39m Privada sem fins lucrativos  2.60
+"
+"1","[38;5;250m5[39m Pública Estadual             2.79
+"
+"1","[38;5;250m6[39m Pública Federal              3.28
+"

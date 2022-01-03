@@ -1,0 +1,2 @@
+"0","ggplot(dados, aes(x = `IGC (Contínuo)`, y = `Sigla da UF`)) +"
+"0","  geom_boxplot()"

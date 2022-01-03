@@ -1,0 +1,38 @@
+"0","filtro <- dados %>% "
+"0","  group_by(`Sigla da UF`) %>%  "
+"0","  summarise( media = mean(`IGC (Contínuo)`)) %>% "
+"0","  arrange(media)"
+"0",""
+"0",""
+"0","levels <- filtro$`Sigla da UF`"
+"0","filtro$`Sigla da UF` <- factor(filtro$`Sigla da UF`, levels=levels, ordered=TRUE)"
+"0",""
+"0","filtro"
+"1","[38;5;246m# A tibble: 27 x 2[39m
+"
+"1","   `Sigla da UF` media
+"
+"1","   [3m[38;5;246m<ord>[39m[23m         [3m[38;5;246m<dbl>[39m[23m
+"
+"1","[38;5;250m 1[39m AL             2.21
+"
+"1","[38;5;250m 2[39m AP             2.22
+"
+"1","[38;5;250m 3[39m TO             2.32
+"
+"1","[38;5;250m 4[39m PI             2.39
+"
+"1","[38;5;250m 5[39m MS             2.39
+"
+"1","[38;5;250m 6[39m MT             2.40
+"
+"1","[38;5;250m 7[39m PE             2.41
+"
+"1","[38;5;250m 8[39m PA             2.47
+"
+"1","[38;5;250m 9[39m MA             2.49
+"
+"1","[38;5;250m10[39m AM             2.49
+"
+"1","[38;5;246m# ... with 17 more rows[39m
+"

@@ -1,0 +1,2 @@
+"0","dados <- read.csv2(""DADOS/Conceito_Enade_2019.csv"")"
+"0","dados <- as.data.frame(dados)"

@@ -1,0 +1,3 @@
+"0","ggplot(dados) + "
+"0","  aes(x = `IGC (Contínuo)`) + "
+"0","  geom_boxplot()"

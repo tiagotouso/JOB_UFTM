@@ -1,0 +1,2 @@
+"0","ggplot(dados, aes(x = `IGC (Contínuo)`, y = `Organização Acadêmica`)) +"
+"0","  geom_boxplot()"

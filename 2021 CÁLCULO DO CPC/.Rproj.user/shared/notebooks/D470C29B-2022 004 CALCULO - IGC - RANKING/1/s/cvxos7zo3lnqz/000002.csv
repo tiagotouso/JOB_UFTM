@@ -1,0 +1,27 @@
+"0","filtro <- dados %>% "
+"0","  group_by(`Organização Acadêmica`) %>%  "
+"0","  summarise( media = mean(`IGC (Contínuo)`)) %>% "
+"0","  arrange(media)"
+"0",""
+"0",""
+"0","levels <- filtro$`Organização Acadêmica`"
+"0","filtro$`Organização Acadêmica` <- factor(filtro$`Organização Acadêmica`, "
+"0","                                            levels=levels, ordered=TRUE)"
+"0",""
+"0","filtro"
+"1","[38;5;246m# A tibble: 5 x 2[39m
+"
+"1","  `Organização Acadêmica`                             media
+"
+"1","  [3m[38;5;246m<ord>[39m[23m                                               [3m[38;5;246m<dbl>[39m[23m
+"
+"1","[38;5;250m1[39m Faculdade                                            2.45
+"
+"1","[38;5;250m2[39m Centro Universitário                                 2.82
+"
+"1","[38;5;250m3[39m Instituto Federal de Educação, Ciência e Tecnologia  2.83
+"
+"1","[38;5;250m4[39m Universidade                                         3.11
+"
+"1","[38;5;250m5[39m Centro Federal de Educação Tecnológica               3.51
+"

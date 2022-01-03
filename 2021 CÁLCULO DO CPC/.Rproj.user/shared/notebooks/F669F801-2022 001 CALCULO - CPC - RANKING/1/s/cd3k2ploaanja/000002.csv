@@ -1,0 +1,5 @@
+"0","idverificar <- which(dados$CPC..Faixa. %in% c('SC', ''))"
+"0",""
+"0","ddt <-dados[idverificar, c(""Organização.Acadêmica"", ""Categoria.Administrativa"" , ""Sigla.da.IES"", ""CPC..Contínuo."")]"
+"0",""
+"0","ddt"

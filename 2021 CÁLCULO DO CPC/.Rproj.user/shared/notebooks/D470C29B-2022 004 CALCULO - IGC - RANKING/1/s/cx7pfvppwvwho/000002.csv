@@ -1,0 +1,1 @@
+"0","dados <- dados[!is.na(dados$`IGC (Contínuo)`), ]"
